@@ -3,5 +3,5 @@ dotenv.config()
 
 module.exports = {
     urlDb : process.env.URL_MONGODB_DEV,
-    port: process.env.PORT
+    PORT: process.env.PORT
 }
