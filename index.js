@@ -5,6 +5,8 @@ const logger = require("morgan")
 const categoriesRouter = require("./app/api/v1/categories/router")
 const db = require('./app/db/index')
 const { PORT } = require("./app/config")
+const notFoundMiddleware = require('./app/middlewares/not-found')
+const handleErrorMiddleware = require('./app/middlewares/handler-error')
 
 const app = express()
 const port = PORT || 3000
@@ -24,6 +26,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/cms', categoriesRouter)
+app.use(notFoundMiddleware)
+app.use(handleErrorMiddleware  )
 
 db.on('open', () => {
     console.log("Database Terhubung")
