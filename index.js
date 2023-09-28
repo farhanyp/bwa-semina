@@ -3,6 +3,7 @@ const path = require("path")
 const cookieParser = require("cookie-parser")
 const logger = require("morgan")
 const categoriesRouter = require("./app/api/v1/categories/router")
+const imagesRouter = require("./app/api/v1/images/router")
 const db = require('./app/db/index')
 const { PORT } = require("./app/config")
 const notFoundMiddleware = require('./app/middlewares/not-found')
@@ -18,16 +19,18 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
     res.status(200).json({
-        message: "ini Index"
+        message: "Selamat datang di API Semina"
     })
 })
 
 app.use('/api/v1/cms', categoriesRouter)
+app.use('/api/v1/cms', imagesRouter)
 app.use(notFoundMiddleware)
-app.use(handleErrorMiddleware  )
+app.use(handleErrorMiddleware)
 
 db.on('open', () => {
     console.log("Database Terhubung")
