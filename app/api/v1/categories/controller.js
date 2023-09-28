@@ -51,7 +51,7 @@ const update = async(req, res, next) => {
 
 const destroy = async(req, res, next) => {
     try {
-       const result = await deleteCategories(req)
+       await deleteCategories(req)
 
         res.status(200).json({
             data: result
