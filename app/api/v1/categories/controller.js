@@ -1,5 +1,5 @@
 const Categories = require("./model")
-const { getAllCategories, createCategories } = require('../../../services/mongoosee/categories')
+const { getAllCategories, createCategories, getOneCategories, updateCategories, deleteCategories } = require('../../../services/mongoosee/categories')
 
 const create = async(req, res, next) => {
     try {
@@ -26,9 +26,8 @@ const index = async(req, res, next) => {
 }
 
 const find = async(req, res, next) => {
-    try {
-        const { id } = req.params
-        const result = await Categories.findOne({ _id: id})
+    try { 
+        const result = await getOneCategories(req)
 
         res.status(200).json({
             data: result
@@ -40,17 +39,7 @@ const find = async(req, res, next) => {
 
 const update = async(req, res, next) => {
     try {
-        const { id } = req.params
-        const { name } = req.body
-        const result = await Categories.findOneAndUpdate({
-            _id: id
-        },
-        { name },
-        {
-            new: true,
-            runValidators: true
-        }
-        )
+        const result = await updateCategories(req)
 
         res.status(200).json({
             data: result
@@ -62,8 +51,7 @@ const update = async(req, res, next) => {
 
 const destroy = async(req, res, next) => {
     try {
-        const { id } = req.params
-        const result = await Categories.findByIdAndRemove(id)
+       const result = await deleteCategories(req)
 
         res.status(200).json({
             data: result
