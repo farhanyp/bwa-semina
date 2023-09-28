@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser")
 const logger = require("morgan")
 const categoriesRouter = require("./app/api/v1/categories/router")
 const imagesRouter = require("./app/api/v1/images/router")
+const talentsRouter = require("./app/api/v1/talents/router")
 const db = require('./app/db/index')
 const { PORT } = require("./app/config")
 const notFoundMiddleware = require('./app/middlewares/not-found')
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/cms', categoriesRouter)
 app.use('/api/v1/cms', imagesRouter)
+app.use('/api/v1/cms', talentsRouter)
 app.use(notFoundMiddleware)
 app.use(handleErrorMiddleware)
 
