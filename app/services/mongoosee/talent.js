@@ -87,12 +87,20 @@ const deleteTalents = async (req) => {
     return result
 }
 
+const checkingTalents = async (id) => {
+    const result = await Talent.findOne({_id: id})
+
+    if(!result) throw new NotFoundError(`Tidak ada talents dengan id: ${id}`)
+
+    return result
+}
 
 module.exports = {
     createTalent,
     getAllTalents,
     getOneTalent,
     updateTalents,
-    deleteTalents
+    deleteTalents,
+    checkingTalents
 }
 

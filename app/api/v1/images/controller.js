@@ -5,6 +5,7 @@ const { createImages } = require("../../../services/mongoosee/images")
 
 const create = async(req, res, next) => {
     try {
+        console.log(req.file)
         const result = await createImages(req)
 
         res.status(StatusCodes.CREATED).json({
