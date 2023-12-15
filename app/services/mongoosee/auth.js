@@ -1,6 +1,7 @@
 const Users = require('../../api/v1/users/model')
 const { BadRequestError, UnauthorizedError } = require('../../errors')
-const { createJWT, createTokenUser } = require('../../utils')
+const { createTokenUser } = require('../../utils/createTokenUser')
+const { createJWT } = require('../../utils/jwt')
 
 const signin = async (req) => {
     const { email, password } = req.body

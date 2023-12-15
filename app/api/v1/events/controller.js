@@ -1,4 +1,4 @@
-const { createEvents, getAllEvents, getOneEvents, updateEvents, deleteEvents } = require('../../../services/mongoosee/events')
+const { createEvents, getAllEvents, getOneEvents, updateEvents, deleteEvents, changeStatusEvents } = require('../../../services/mongoosee/events')
 const { StatusCodes } = require('http-status-codes')
 
 const create = async ( req, res, next) => {
@@ -61,10 +61,23 @@ const destroy = async ( req, res, next) => {
     }
 }
 
+const changeStatus = async (req, res, next) => {
+    try {
+      const result = await changeStatusEvents(req);
+  
+      res.status(StatusCodes.OK).json({
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
 module.exports={
     create,
     index,
     find,
     update,
-    destroy
+    destroy,
+    changeStatus
 }

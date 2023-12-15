@@ -6,7 +6,7 @@ const Talent = require('../../api/v1/talents/model')
 const getAllTalents = async (req) => {
     const { keyword } = req.query
 
-    let condition = {}
+    let condition = {organizer: req.user.organizer}
 
     if(keyword){
         condition = { ...condition, name: { $regex: keyword, $options: 'i'}}
@@ -42,11 +42,11 @@ const createTalent = async (req) => {
 
     await checkingImage(image)
 
-    const check = await Talent.findOne({ name })
+    const check = await Talent.findOne({ name, organizer: req.user.organizer })
 
     if(check) throw new BadRequestError('pembicara nama duplikat')
 
-    const result = await Talent.create({ name, image, role})
+    const result = await Talent.create({ name, image, role, organizer: req.user.organizer})
 
     return result
 }
@@ -59,13 +59,14 @@ const updateTalents = async (req) => {
 
     const check = await Talent.findOne({
         name,
+        organizer: req.user.organizer,
         _id: { $ne: id }
     })
 
     if(check) throw new BadRequestError('Pembicara nama duplikat')
 
     const result = await Talent.findOneAndUpdate(
-        { _id: id},
+        { _id: id, organizer: req.user.organizer},
         { name, image, role},
         { new: true, runValidators: true }
     )
@@ -79,7 +80,8 @@ const deleteTalents = async (req) => {
     const { id } = req.params
 
     const result = await Talent.findOneAndDelete({
-        _id: id
+        _id: id,
+        organizer: req.user.organizer
     })
 
     if(!result) throw new NotFoundError(`Tidak ada pembicara dengan id: ${id}`)

@@ -9,7 +9,7 @@ const createJWT = ({ payload }) => {
     return token
 }
 
-const isTokenValid= ({ token }) => jwt.verify(token.jwtSecret)
+const isTokenValid= ({ token }) => jwt.verify(token, jwtSecret)
 
 module.exports = {
     createJWT,

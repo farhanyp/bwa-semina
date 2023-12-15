@@ -1,10 +1,34 @@
 const Categories = require("./model")
-const { createOrganizer } = require('../../../services/mongoosee/users')
+const { createCMSOrganizer, createCMSUser, getAllUsers } = require('../../../services/mongoosee/users')
 const { StatusCodes } = require("http-status-codes")
 
-const create = async(req, res, next) => {
+const getUsers = async(req, res, next) => {
     try {
-        const result = await createOrganizer(req)
+        const result = await getAllUsers(req)
+
+        res.status(StatusCodes.CREATED).json({
+            data: result
+        })
+    } catch (err) {
+        next(err)
+    }
+}
+
+const createOrganizer = async(req, res, next) => {
+    try {
+        const result = await createCMSOrganizer(req)
+
+        res.status(StatusCodes.CREATED).json({
+            data: result
+        })
+    } catch (err) {
+        next(err)
+    }
+}
+
+const createUser = async(req, res, next) => {
+    try {
+        const result = await createCMSUser(req)
 
         res.status(StatusCodes.CREATED).json({
             data: result
@@ -15,5 +39,7 @@ const create = async(req, res, next) => {
 }
 
 module.exports ={
-    create,
+    createOrganizer,
+    createUser,
+    getUsers
 }

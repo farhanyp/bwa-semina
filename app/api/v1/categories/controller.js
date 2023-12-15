@@ -16,7 +16,7 @@ const create = async(req, res, next) => {
 
 const index = async(req, res, next) => {
     try {
-        const result = await getAllCategories()
+        const result = await getAllCategories(req)
 
         res.status(StatusCodes.OK).json({
             data: result
@@ -52,7 +52,7 @@ const update = async(req, res, next) => {
 
 const destroy = async(req, res, next) => {
     try {
-       await deleteCategories(req)
+       const result = await deleteCategories(req)
 
         res.status(StatusCodes.OK).json({
             data: result

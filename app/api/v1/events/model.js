@@ -71,7 +71,12 @@ const EventSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Category',
         required: true
-    }
+    },
+    organizer: {
+		type: mongoose.Types.ObjectId,
+		ref: 'Organizer',
+		required: true
+	}
 },
 {
     timestamps: true
