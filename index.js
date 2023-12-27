@@ -11,12 +11,14 @@ const autoCMSRouter = require("./app/api/v1/auth/router")
 const ordersRouter = require("./app/api/v1/orders/router")
 const participantsRouter = require("./app/api/v1/participants/router")
 const paymentsRouter = require("./app/api/v1/payments/router")
+const userRefreshTokenRouter = require("./app/api/v1/userRefreshToken/router")
 const db = require('./app/db/index')
 const { PORT } = require("./app/config")
 const { urlDb } = require("./app/config")
 const notFoundMiddleware = require('./app/middlewares/not-found')
 const handleErrorMiddleware = require('./app/middlewares/handler-error')
 const mongoose = require('mongoose');
+const cors = require('cors')
 
 const app = express()
 const port = PORT || 3000
@@ -25,6 +27,7 @@ db.on('error', (err) => {
     console.log('Connection Error: Tidak terhubung ke mongo DB')
 })
 
+app.use(cors())
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -45,6 +48,7 @@ app.use('/api/v1/cms', organizersRouter)
 app.use('/api/v1/cms', autoCMSRouter)
 app.use('/api/v1/cms', ordersRouter)
 app.use('/api/v1/cms', paymentsRouter)
+app.use('/api/v1/cms', userRefreshTokenRouter);
 app.use('/api/v1', participantsRouter)
 app.use(notFoundMiddleware)
 app.use(handleErrorMiddleware)

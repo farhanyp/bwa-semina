@@ -27,7 +27,7 @@ const getAllPayments = async (req) => {
   const result = await Payments.find(condition)
     .populate({
       path: 'image',
-      select: '_id name',
+      select: '_id name dataImage typeImage',
     })
     .select('_id type status image');
 
@@ -43,7 +43,7 @@ const getOnePayments = async (req) => {
   })
     .populate({
       path: 'image',
-      select: '_id name',
+      select: '_id name dataImage typeImage',
     })
     .select('_id type status image');
 

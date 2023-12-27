@@ -3,7 +3,16 @@ const { model, Schema} = mongoose
 
 const imageSchema = Schema(
     {
-        name: { type: String },
+        dataImage:{
+            type: Buffer,
+            required: true,
+        },
+        typeImage:{
+            type: String,
+            required: true,
+        },
+        
+        // name: { type: String },
     },
 
     { timestamps:true }

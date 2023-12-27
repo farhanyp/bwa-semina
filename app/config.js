@@ -6,6 +6,8 @@ module.exports = {
     PORT: process.env.PORT,
     jwtExpiration: '24h',
     jwtSecret: 'jwtSecret',
+    jwtRefreshTokenExpiration: '24h',
+    jwtRefreshTokenSecret: 'jwtSecretRefreshToken',
     gmail: 'farhan.yudha2016we@gmail.com',
     password: 'glet kqgx tjmt bkzu'
 }

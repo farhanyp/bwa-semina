@@ -28,12 +28,12 @@ const getAllEvents = async (req) => {
       }
 
     const result = await Events.find(condition)
-    .populate({ path: 'image', select: '_id name'})
+    .populate({ path: 'image', select: '_id name dataImage typeImage'})
     .populate({ path: 'category', select: '_id name'})
     .populate({ 
         path: 'talent', 
         select: '_id name',
-        populate: { path: 'image', select: '_id name' }
+        populate: { path: 'image', select: '_id name dataImage typeImage' }
     })
 
     return result
@@ -72,7 +72,7 @@ const getOneEvents = async (req) => {
     const { id } = req.params
 
     const result = await Events.findOne({ _id: id, organizer: req.user.organizer })
-    .populate({ path: 'image', select: '_id name'})
+    .populate({ path: 'image', select: '_id name dataImage typeImage'})
     .populate({
         path: 'category',
         select: '_id name'
@@ -80,7 +80,7 @@ const getOneEvents = async (req) => {
     .populate({ 
         path: 'talent', 
         select: '_id name',
-        populate: { path: 'image', select: '_id name' }
+        populate: { path: 'image', select: '_id name dataImage typeImage' }
     })
 
     if(!result) throw new NotFoundError(`Tidak ada pembicara dengan id: ${id}`)

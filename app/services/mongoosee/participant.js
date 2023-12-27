@@ -103,7 +103,10 @@ const activateParticipant = async (req) => {
   const getAllEvents = async (req) => {
     const result = await Events.find({ statusEvent: 'Published' })
       .populate('category')
-      .populate('image')
+      .populate({
+        path: 'image',
+        select: '_id name dataImage typeImage',
+      })
       .select('_id title date tickets venueName');
   
     return result;
@@ -114,7 +117,10 @@ const activateParticipant = async (req) => {
     const result = await Events.findOne({ _id: id })
       .populate('category')
       .populate({ path: 'talent', populate: 'image' })
-      .populate('image');
+      .populate({
+        path: 'image',
+        select: '_id name dataImage typeImage',
+      })
   
     if (!result) throw new NotFoundError(`Tidak ada acara dengan id :  ${id}`);
   

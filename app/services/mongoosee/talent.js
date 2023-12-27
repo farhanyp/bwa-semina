@@ -15,7 +15,7 @@ const getAllTalents = async (req) => {
     const result = await Talent.find(condition)
     .populate({
         path: 'image',
-        select: '_id name'
+        select: '_id name dataImage typeImage'
     })
     .select('_id name role image')
 
@@ -28,7 +28,7 @@ const getOneTalent = async (req) => {
     const result = await Talent.findOne({ _id: id})
     .populate({
         path: 'image',
-        select: '_id name'
+        select: '_id name dataImage typeImage'
     })
     .select('_id name role image')
 

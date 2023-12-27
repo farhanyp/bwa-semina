@@ -59,7 +59,7 @@ const EventSchema = new mongoose.Schema({
     },
     image: {
         type: mongoose.Types.ObjectId,
-        ref: 'Category',
+        ref: 'Image',
         required: true
     },
     talent: {

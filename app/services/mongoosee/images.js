@@ -8,9 +8,9 @@ const generateUrlImage = async (req) => {
 
 const createImages = async (req) => {
     const result = await Images.create({
-        name: req.file ?
-        `uploads/${req.file.filename}`:
-        'uploads/avatar/default.jpg'
+        name: req.file ? `uploads/${req.file.filename}`: 'uploads/avatar/default.jpg',
+        dataImage : req.file.buffer,
+        typeImage : req.file.mimetype
     })
 
     return result

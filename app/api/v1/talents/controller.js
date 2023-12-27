@@ -1,5 +1,6 @@
 const { createTalent, getAllTalents, getOneTalent, updateTalents, deleteTalents } = require('../../../services/mongoosee/talent')
 const { StatusCodes } = require('http-status-codes')
+const { bufferToBase64 } = require('../../../utils/base64')
 
 const create = async (req, res, next) => {
     try{
@@ -17,8 +18,16 @@ const index = async (req, res, next) => {
     try{
         const result = await getAllTalents(req)
 
+        const resultCopy = JSON.parse(JSON.stringify(result));
+
+          for (const data of resultCopy) {
+            if (data && data.image.dataImage) {
+              data.image.dataImage = bufferToBase64(data.image.dataImage);
+            }
+          }
+
         res.status(StatusCodes.OK).json({
-            data: result
+            data: resultCopy 
         })
     }catch(err){
         next(err)
@@ -29,8 +38,12 @@ const find = async (req, res, next) => {
     try{
         const result = await getOneTalent(req)
 
+        const resultCopy = JSON.parse(JSON.stringify(result)); 
+        
+        resultCopy.image.dataImage = bufferToBase64(result.image.dataImage);
+
         res.status(StatusCodes.OK).json({
-            data: result
+            data: resultCopy
         })
     }catch(err){
         next(err)

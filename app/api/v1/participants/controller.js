@@ -9,6 +9,7 @@ const {
     getAllPaymentByOrganizer,
   } = require('../../../services/mongoosee/participant');
 const { StatusCodes } = require('http-status-codes');
+const { bufferToBase64 } = require('../../../utils/base64');
 
 
 const signup = async (req, res, next) => {
@@ -50,9 +51,17 @@ const activeParticipant = async (req, res, next) => {
 const getAllLandingPage = async (req, res, next) => {
     try {
       const result = await getAllEvents(req);
+
+      const resultCopy = JSON.parse(JSON.stringify(result));
+
+      for (const data of resultCopy) {
+        if (data && data.image.dataImage) {
+            data.image.dataImage = bufferToBase64(data.image.dataImage);
+        }
+      }
   
       res.status(StatusCodes.OK).json({
-        data: result,
+        data: resultCopy,
       });
     } catch (err) {
       next(err);
@@ -62,9 +71,15 @@ const getAllLandingPage = async (req, res, next) => {
   const getDetailLandingPage = async (req, res, next) => {
     try {
       const result = await getOneEvent(req);
+
+      const resultCopy = JSON.parse(JSON.stringify(result)); 
+        
+      resultCopy.image.dataImage = bufferToBase64(result.image.dataImage);
+
+      resultCopy.talent.image.dataImage = bufferToBase64(result.talent.image.dataImage);
   
       res.status(StatusCodes.OK).json({
-        data: result,
+        data: resultCopy,
       });
     } catch (err) {
       next(err);
