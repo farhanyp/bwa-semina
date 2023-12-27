@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { urlDb } = require('../config')
 
-mongoose.connect('mongodb://localhost:27017/db_bwa_semina');
+mongoose.connect(urlDb);
 console.log(urlDb)
 const db = mongoose.connection
 
